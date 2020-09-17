@@ -48,6 +48,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="VS solution that contains a class library.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Shapes.Classes\Shapes.Classes.csproj">
+      <Project>{c2992f1b-9c53-4bd8-adb8-12ce83ba8db1}</Project>
+      <Name>Shapes.Classes</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
