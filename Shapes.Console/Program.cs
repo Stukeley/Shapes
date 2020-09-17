@@ -17,15 +17,15 @@ namespace Shapes.Console
 				list.Add(shape);
 			}
 
-			foreach (var shape in list)
+			for (int i = 0; i < list.Count; i++)
 			{
-				System.Console.WriteLine(shape.ToString());
+				System.Console.WriteLine($"{i + 1}: " + list[i].ToString() + "\n");
 			}
 
 			System.Console.WriteLine("\n");
 
 			// Calculate the sum of perimeters of all triangles
-			var triangles = list.Where(x => x is Triangle);
+			var triangles = list.Where(x => x is Triangle).ToList();
 			var sum = triangles.Select(x => (x as Triangle).Circumference).Sum();
 			System.Console.WriteLine($"The sum of perimeters of all triangles is: {sum:0.00}\n");
 
