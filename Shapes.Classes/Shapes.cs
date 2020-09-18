@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Numerics;
 
 namespace Shapes.Classes
@@ -328,8 +329,57 @@ namespace Shapes.Classes
 
 		public override string ToString() => IsSqare() ? $"Square @ ({Center.X:0.00}, {Center.Y:0.00}): w = {Width:0.00}" : $"Rectangle @ ({ Center.X:0.00} ,  { Center.Y:0.00} ): w =  {Width:0.00}";
 	}
-	public class Triangle : Shape2D
+
+	// IEnumerator should be implemented on a different class, not Triangle
+	public class TriangleEnumerator : IEnumerator
 	{
+		public Vector2[] _points;
+		private int position = -1;
+
+		public TriangleEnumerator(Vector2[] points)
+		{
+			_points = points;
+		}
+
+		object IEnumerator.Current
+		{
+			get
+			{
+				return Current;
+			}
+		}
+
+		public Vector2 Current
+		{
+			get
+			{
+				try
+				{
+					return _points[position];
+				}
+				catch (IndexOutOfRangeException)
+				{
+					throw new InvalidOperationException();
+				}
+			}
+		}
+
+		public bool MoveNext()
+		{
+			position++;
+			return position < _points.Length;
+		}
+
+		public void Reset()
+		{
+			position = -1;
+		}
+	}
+
+	public class Triangle : Shape2D, IEnumerable
+	{
+		// We'll use an array of points, since there are always 3 and in the same order
+		private Vector2[] _points;
 		public Vector2 P1 { get; }
 		public Vector2 P2 { get; }
 		public Vector2 P3 { get; }
@@ -342,6 +392,8 @@ namespace Shapes.Classes
 			P1 = p1;
 			P2 = p2;
 			P3 = p3;
+
+			_points = new Vector2[3] { P1, P2, P3 };
 
 			//Center
 			Center = new Vector3()
@@ -365,6 +417,11 @@ namespace Shapes.Classes
 		}
 
 		public override string ToString() => $"Triangle @ ({Center.X:0.00}, {Center.Y:0.00}): P1 ({P1.X:0.00}, {P1.Y:0.00}), P2 ({P2.X:0.00}, {P2.Y:0.00}), P3 ({P3.X:0.00}, {P3.Y:0.00})";
+
+		public IEnumerator GetEnumerator()
+		{
+			return new TriangleEnumerator(_points);
+		}
 	}
 	public class Sphere : Shape3D
 	{

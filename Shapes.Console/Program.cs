@@ -1,6 +1,7 @@
 ﻿using Shapes.Classes;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace Shapes.Console
 {
@@ -45,6 +46,16 @@ namespace Shapes.Console
 			{
 				System.Console.Write($"The highest volume of all Shape3Ds is:\n");
 				System.Console.WriteLine(highestV.ToString());
+			}
+
+			// foreach on a triangle
+			System.Console.WriteLine("\nForeach on a triangle:\n");
+			var t = new Triangle(Vector2.One, Vector2.One, new Vector2(2.0f, 0.5f));
+			System.Console.WriteLine(t.ToString());
+
+			foreach (Vector2 v in t)
+			{
+				System.Console.WriteLine(v);
 			}
 
 			System.Console.ReadKey();
